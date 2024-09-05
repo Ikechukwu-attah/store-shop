@@ -4,6 +4,8 @@ import Image from "next/image";
 import flag from "../shared/components/dropdown/assets/images/flag.png";
 import Input, { InputType } from "@/shared/components/inputs";
 import { type ClassValue } from "clsx";
+import { useState } from "react";
+import SearchInput from "@/shared/components/navbar/searchInput";
 
 export default function Home() {
   const data = [
@@ -21,10 +23,22 @@ export default function Home() {
     console.log("Selected items:", selected);
   };
 
+  const [dataValue, setDataValue] = useState<{ [key: string]: string }>({});
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setDataValue((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleClearInput = (name: string) => {
+    setDataValue((prev) => ({ ...prev, [name]: "" }));
+    console.log(dataValue, name);
+  };
   // Basic Dropdown
   return (
     <main className="flex min-h-screen text-primary flex-col items-center justify-between p-24 bg-red-500">
-      <Dropdown
+      {/* <Dropdown
         type={DropdownType.multiSelect}
         data={data}
         onSelect={handleSelect}
@@ -63,7 +77,7 @@ export default function Home() {
         width="50%"
         inputType="text"
         label="Name"
-        onChange={(e) => console.log(e.target.value)}
+        onChange={handleChange}
       />
 
       <Input
@@ -82,8 +96,11 @@ export default function Home() {
         width="100%"
         inputType="text"
         label="Name"
+        name="firstName"
         buttonText="submit"
-        onChange={(e) => console.log(e.target.value)}
+        onChange={handleChange}
+        clearInput={handleClearInput}
+        value={dataValue.firstName || ""}
       />
 
       <Input
@@ -95,6 +112,28 @@ export default function Home() {
         buttonText="submit"
         onChange={(e) => console.log(e.target.value)}
       />
+
+      <Input
+        type={InputType.BASE_TEXTAREA}
+        placeholder="Enter your name"
+        width="50%"
+        inputType="text"
+        label="Name"
+        buttonText="submit"
+        onChange={(e) => console.log(e.target.value)}
+      />
+
+      <Input
+        type={InputType.BASE_TEXTAREA_WITH_LABEL}
+        placeholder="Enter your name"
+        width="50%"
+        inputType="text"
+        label="Discussion"
+        buttonText="submit"
+        onChange={(e) => console.log(e.target.value)}
+      /> */}
+
+      <SearchInput />
     </main>
   );
 }

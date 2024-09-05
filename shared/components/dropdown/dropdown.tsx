@@ -14,14 +14,22 @@ interface DropdownItems {
   label: string;
   flag?: string;
 }
+
 interface DropDownProps {
   type: DropdownType;
   data: DropdownItems[];
   onSelect: (select: string | string[]) => void;
   width?: string;
+  showBorder?: boolean;
 }
 
-const Dropdown = ({ type, data, onSelect, width }: DropDownProps) => {
+const Dropdown = ({
+  type,
+  data,
+  onSelect,
+  width,
+  showBorder = true,
+}: DropDownProps) => {
   const [selected, setSelected] = useState<string | string[]>(
     type === DropdownType.basic ? "" : []
   );
@@ -51,11 +59,11 @@ const Dropdown = ({ type, data, onSelect, width }: DropDownProps) => {
 
   return (
     <div
-      className={`border-[1px] shadow-lg border-green-400 py-2 bg-white rounded-md ${isOpen ? "animate-fade-in-down" : "animate-fade-out-up"}`}
-      style={{ width }}
+      className="relative inline-block text-left"
+      style={{ width }} // Apply fixed width to prevent resizing
     >
       <div
-        className="flex justify-between items-center px-2"
+        className="flex justify-between items-center px-2  border-green-400 border-0 py-2 bg-white  cursor-pointer"
         onClick={() => setIsOpen(!isOpen)}
       >
         <h4 className="text-sm text-dark flex items-center gap-2">
@@ -71,10 +79,14 @@ const Dropdown = ({ type, data, onSelect, width }: DropDownProps) => {
         </h4>
         <MdKeyboardArrowDown />
       </div>
+
       {isOpen && (
-        <div className="mt-2">
+        <div
+          className={`absolute z-50 mt-2 w-full bg-white ${showBorder ? "border border-gray-300 rounded-md" : ""} shadow-lg`}
+          style={{ width }} // Ensure the dropdown content has a fixed width
+        >
           {data.map((item, index) => (
-            <div key={index} className="mt-1 mb-1 ">
+            <div key={index} className="mt-1 mb-1">
               {type === DropdownType.checkbox && (
                 <label
                   className={`flex gap-2 px-2 text-dark text-sm ${
@@ -95,7 +107,7 @@ const Dropdown = ({ type, data, onSelect, width }: DropDownProps) => {
 
               {type === DropdownType.multiSelect && (
                 <ul
-                  className="cursor-pointer "
+                  className="cursor-pointer"
                   onClick={() => handleSelect(item.label)}
                 >
                   <li
@@ -116,7 +128,7 @@ const Dropdown = ({ type, data, onSelect, width }: DropDownProps) => {
                   onClick={() => handleSelect(item.label, item.flag)}
                 >
                   <li
-                    className={`cursor-pointer px-2 text-dark text-sm  hover:bg-green-500 ${
+                    className={`cursor-pointer px-2 text-dark text-sm hover:bg-green-500 ${
                       (selected as string) === item.label
                         ? "bg-light-blue "
                         : ""
