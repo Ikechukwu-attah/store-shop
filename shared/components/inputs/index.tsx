@@ -20,6 +20,7 @@ interface InputProps {
   label?: string;
   name?: string;
   inputType: string;
+  showBorder?: boolean;
   width: string;
   buttonText?: string;
   placeholder?: string;
@@ -40,6 +41,7 @@ const Input = ({
   value,
   name,
   buttonText,
+  showBorder,
   clearInput,
   onChange,
 }: InputProps) => {
@@ -59,6 +61,7 @@ const Input = ({
           placeholder="Enter your name"
           width="100%"
           typeOfInput={InputType.BASE_INPUT}
+          showBorder={showBorder}
         />
       );
 

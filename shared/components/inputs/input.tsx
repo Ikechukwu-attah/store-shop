@@ -5,6 +5,7 @@ interface InputProps {
   value?: string;
   width?: string;
   inputType: string;
+  showBorder?: boolean;
   name: string;
   typeOfInput?: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -16,11 +17,13 @@ const InputComponent = ({
   inputType,
   name,
   typeOfInput,
+  showBorder = true,
   onChange,
 }: InputProps) => {
+  console.log(showBorder);
   return (
     <input
-      className={` ${typeOfInput === "baseInput" ? " w-full px-4 py-2 outline-none  border-gray-300 rounded-md focus:border-main" : "px-4  py-2 outline-none rounded-md focus:border-main"}  `}
+      className={` ${typeOfInput === "baseInput" ? ` w-full px-4 py-2 outline-none  border-gray-300 ${showBorder ? "rounded-md" : ""}  focus:border-main` : "px-4  py-2 outline-none rounded-md focus:border-main"}  `}
       style={{ width }}
       placeholder={placeholder}
       value={value}

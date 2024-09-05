@@ -17,6 +17,7 @@ const SearchInput = () => {
         inputType="text"
         onChange={() => console.log("search")}
         type={InputType.BASE_INPUT}
+        showBorder={false}
       />
       <div className="h-full flex items-center border-l-2 border-gray-300">
         <Dropdown
